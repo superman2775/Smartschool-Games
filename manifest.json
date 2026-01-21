@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Smartschool Vakken extra knoppen",
+  "name": "Smartschool Games",
   "version": "1.0.0",
-  "description": "Voegt 5 extra knoppen toe aan het Vakken-menu in Smartschool.",
+  "description": "Open verschillende games via het vakken menu in Smartschool.",
   "permissions": ["scripting", "activeTab"],
   "host_permissions": [
     "https://*.smartschool.be/*"
