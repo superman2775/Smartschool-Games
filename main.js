@@ -1,45 +1,158 @@
-function addExtraCourseButtons() {
-  const coursesMenu = document.querySelector("#coursesMenu .topnav__menu__hdr");
-  if (!coursesMenu) return;
+const EXTRA_ITEMS = [
+  {
+    label: "Ships 3D",
+    descr: "Play as a sailor on servers up to 90 players.",
+    url: "https://yp3d.com/ships3d/"
+  },
+  {
+    label: "Tanks 3D",
+    descr: "Play as a tank, fighting up to 1,000 players.",
+    url: "https://yp3d.com/tanks3d/"
+  },
+  {
+    label: "Sharks 3D",
+    descr: "Play as a shark and eat other sharks.",
+    url: "https://yp3d.com/sharks3d/"
+  },
+  {
+    label: "Spinball 3D",
+    descr: "Play Pong in 3D withspin physics.",
+    url: "https://yp3d.com/spinball3d/"
+  },
+  {
+    label: "[BETA] Napoleonic.io]",
+    descr: "Play as a soldier in Napoleonic battles.",
+    url: "https://napoleonic.io/"
+  },
+  {
+    label: "Privacy Policy",
+    descr: "Read yp3d.com privacy policy.",
+    url: "https://yp3d.com/privacy--policy.html"
+  }
+];
 
-  // check of we ze al toegevoegd hebben
-  if (coursesMenu.querySelector(".ext-extra-course-buttons")) return;
+function openOverlayWithUrl(url) {
+  let overlay = document.querySelector(".ext-yp3d-overlay");
+  if (!overlay) {
+    overlay = document.createElement("div");
+    overlay.className = "ext-yp3d-overlay";
+    Object.assign(overlay.style, {
+      position: "fixed",
+      inset: "0",
+      backgroundColor: "rgba(0,0,0,0.6)",
+      zIndex: "999999",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
+    });
 
-  const filtersContainer = coursesMenu.querySelector(".js-course-filters");
-  if (!filtersContainer) return;
+    const frameWrapper = document.createElement("div");
+    frameWrapper.className = "ext-yp3d-frame-wrapper";
+    Object.assign(frameWrapper.style, {
+      position: "relative",
+      width: "90%",
+      height: "90%",
+      maxWidth: "1400px",
+      maxHeight: "900px"
+    });
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "ext-extra-course-buttons course-btnbar";
+    const closeBtn = document.createElement("button");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", "Sluiten");
+    Object.assign(closeBtn.style, {
+      position: "absolute",
+      top: "-14px",
+      right: "-14px",
+      width: "32px",
+      height: "32px",
+      borderRadius: "50%",
+      border: "none",
+      cursor: "pointer",
+      fontSize: "20px",
+      fontWeight: "bold",
+      backgroundColor: "#fff",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.4)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "0"
+    });
+    closeBtn.addEventListener("click", () => {
+      overlay.style.display = "none";
+    });
 
-  const buttons = [
-    { id: "ext_course_1", label: "Extra 1", onClick: () => alert("Extra 1") },
-    { id: "ext_course_2", label: "Extra 2", onClick: () => alert("Extra 2") },
-    { id: "ext_course_3", label: "Extra 3", onClick: () => alert("Extra 3") },
-    { id: "ext_course_4", label: "Extra 4", onClick: () => alert("Extra 4") },
-    { id: "ext_course_5", label: "Extra 5", onClick: () => alert("Extra 5") }
-  ];
+    const iframe = document.createElement("iframe");
+    iframe.className = "ext-yp3d-iframe";
+    Object.assign(iframe.style, {
+      width: "100%",
+      height: "100%",
+      border: "none",
+      borderRadius: "12px",
+      backgroundColor: "#fff",
+      boxShadow: "0 4px 16px rgba(0,0,0,0.5)"
+    });
 
-  buttons.forEach(btnDef => {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.id = btnDef.id;
-    btn.textContent = btnDef.label;
-    btn.className = "smscButton smscButton--fit-text"; // sluit aan bij bestaande stijl
-    btn.addEventListener("click", btnDef.onClick);
-    wrapper.appendChild(btn);
-  });
+    frameWrapper.appendChild(iframe);
+    frameWrapper.appendChild(closeBtn);
+    overlay.appendChild(frameWrapper);
+    document.body.appendChild(overlay);
+  }
 
-  // na de bestaande filters plaatsen
-  filtersContainer.insertAdjacentElement("afterend", wrapper);
+  const iframe = overlay.querySelector(".ext-yp3d-iframe");
+  if (iframe) {
+    iframe.src = url;
+  }
+  overlay.style.display = "flex";
 }
 
-// Omdat Smartschool het Vakken-menu dynamisch opent, luisteren op DOM-mutaties
+function createExtraCourseItem(cfg) {
+  const li = document.createElement("li");
+  li.className = "ext-extra-course-item";
+
+  const a = document.createElement("a");
+  a.role = "menuitem";
+  a.href = "javascript://";
+  a.className =
+    "topnav__menuitem topnav__menuitem--icon course-link hlp-vert-box smsc-svg--schoolbord--24";
+  a.addEventListener("click", () => openOverlayWithUrl(cfg.url));
+
+  const nameSpan = document.createElement("span");
+  nameSpan.className = "course-link__name js-course-name";
+  nameSpan.textContent = cfg.label;
+
+  const descrSpan = document.createElement("span");
+  descrSpan.className = "course-link__descr js-course-descr";
+  descrSpan.textContent = cfg.descr || "";
+
+  a.appendChild(nameSpan);
+  a.appendChild(descrSpan);
+  li.appendChild(a);
+
+  return li;
+}
+
+function addExtraCourseButtonsInList() {
+  const list = document.querySelector(
+    "#coursesMenu ul.course-list.js-courses-list"
+  );
+  if (!list) return;
+
+  // niet opnieuw toevoegen
+  if (list.querySelector(".ext-extra-course-item")) return;
+
+  const fragment = document.createDocumentFragment();
+  EXTRA_ITEMS.forEach(cfg => {
+    fragment.appendChild(createExtraCourseItem(cfg));
+  });
+
+  // helemaal onderaan de vakkenlijst
+  list.appendChild(fragment);
+}
+
 const observer = new MutationObserver(() => {
-  const menuOpen =
-    document.querySelector("#coursesMenu") &&
-    !document.getElementById("coursesMenu").hasAttribute("hidden");
-  if (menuOpen) {
-    addExtraCourseButtons();
+  const menu = document.getElementById("coursesMenu");
+  if (menu && !menu.hasAttribute("hidden")) {
+    addExtraCourseButtonsInList();
   }
 });
 
@@ -48,5 +161,4 @@ observer.observe(document.documentElement, {
   subtree: true
 });
 
-// fallback: eerste load
-document.addEventListener("DOMContentLoaded", addExtraCourseButtons);
+document.addEventListener("DOMContentLoaded", addExtraCourseButtonsInList);
