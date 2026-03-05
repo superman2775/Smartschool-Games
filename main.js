@@ -20,9 +20,14 @@ const EXTRA_ITEMS = [
     url: "https://yp3d.com/spinball3d/"
   },
   {
-    label: "[BETA] Napoleonic.io]",
+    label: "[BETA] Napoleonic.io",
     descr: "Play as a soldier in Napoleonic battles.",
     url: "https://napoleonic.io/"
+  },
+  {
+    label: "Minecraft Classic",
+    descr: "Play a basic version of Minecraft",
+    url: "https://classic.minecraft.net/"
   },
   {
     label: "Privacy Policy",
