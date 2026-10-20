@@ -1,5 +1,15 @@
 const EXTRA_ITEMS = [
   {
+    label: "Salty Seas",
+    descr: "Become a sailor in the Caribbean seas.",
+    url: "https://saltyseas.io/app/"
+  },
+  {
+    label: "Redcoats.io",
+    descr: "Play in the era of European line infantry.",
+    url: "https://redcoats.io/app/"
+  },
+  {
     label: "Ships 3D",
     descr: "Play as a sailor on servers up to 90 players.",
     url: "https://yp3d.com/ships3d/"
@@ -10,24 +20,9 @@ const EXTRA_ITEMS = [
     url: "https://yp3d.com/tanks3d/"
   },
   {
-    label: "Sharks 3D",
-    descr: "Play as a shark and eat other sharks.",
-    url: "https://yp3d.com/sharks3d/"
-  },
-  {
     label: "Spinball 3D",
     descr: "Play Pong in 3D withspin physics.",
     url: "https://yp3d.com/spinball3d/"
-  },
-  {
-    label: "[BETA] Napoleonic.io",
-    descr: "Play as a soldier in Napoleonic battles.",
-    url: "https://napoleonic.io/"
-  },
-  {
-    label: "Minecraft Classic",
-    descr: "Play a basic version of Minecraft",
-    url: "https://classic.minecraft.net/"
   },
   {
     label: "Privacy Policy",
