@@ -1,8 +1,7 @@
 # Smartschool-Games
-this adds 6 games to smartschool:
+this adds 5 games to smartschool:
+- Salty Seas
+- Redcoats.io
 - Ships 3D
 - Tanks 3D
 - Spinball 3D
-- Sharks 3D
-- Napoleonic.io
-- Minecraft
