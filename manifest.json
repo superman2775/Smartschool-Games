@@ -3,7 +3,6 @@
   "name": "Smartschool Games",
   "version": "1.1.0",
   "description": "Speel games in Smartschool!",
-  "permissions": ["activeTab"],
   "host_permissions": [
     "https://*.smartschool.be/*"
   ],
